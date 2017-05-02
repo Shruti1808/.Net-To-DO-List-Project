@@ -208,3 +208,5 @@ C:\Users\epicodus\Desktop\.Net-To-DO-List-Project\src\ToDoList\Migrations\ToDoLi
 C:\Users\epicodus\Desktop\.Net-To-DO-List-Project\src\ToDoList\Models\Category.cs
 C:\Users\epicodus\Desktop\.Net-To-DO-List-Project\src\ToDoList\Models\Item.cs
 C:\Users\epicodus\Desktop\.Net-To-DO-List-Project\src\ToDoList\Models\ToDoListContext.cs
+C:\Users\epicodus\Desktop\.Net-To-DO-List-Project\src\ToDoList\Models\Repositories\EFItemRepository.cs
+C:\Users\epicodus\Desktop\.Net-To-DO-List-Project\src\ToDoList\Models\Repositories\IItemRepository.cs

@@ -6,17 +6,31 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoList.Controllers;
 using ToDoList.Models;
 using Xunit;
+using Moq;
 
 
 namespace ToDoList.Tests
 {
     public class ItemsControllerTest
     {
+        Mock<IItemRepository> mock = new Mock<IItemRepository>();
+
+        private void DbSetup()
+        {
+            mock.Setup(m => m.Items).Returns(new Item[]
+            {
+                new Item {ItemId = 1, Description = "Wash the dog" },
+                new Item {ItemId = 2, Description = "Do the dishes" },
+                new Item {ItemId = 3, Description = "Sweep the floor" }
+            }.AsQueryable());
+        }
+
         [Fact]
         public void Get_ViewResult_Index_Test()
         {
             //Arrange
-            ItemsController controller = new ItemsController();
+            DbSetup();
+            ItemsController controller = new ItemsController(mock.Object);
 
             //Act
             var result = controller.Index();
@@ -26,12 +40,11 @@ namespace ToDoList.Tests
         }
 
         [Fact]
-        public void Get_ModelList_Index_Test()
+        public void Get_ModelList_Index_Test()  //Confirms model as list of items
         {
             //Arrange
-            ItemsController controller = new ItemsController();
-            IActionResult actionResult = controller.Index();
-            ViewResult indexView = controller.Index() as ViewResult;
+            DbSetup();
+            ViewResult indexView = new ItemsController(mock.Object).Index() as ViewResult;
 
             //Act
             var result = indexView.ViewData.Model;
@@ -41,16 +54,17 @@ namespace ToDoList.Tests
         }
 
         [Fact]
-        public void Post_MethodAddsItem_Test()
+        public void Post_MethodAddsItem_Test()    //Confirms presence of known entry
         {
             // Arrange
-            ItemsController controller = new ItemsController();
+            DbSetup();
+            ItemsController controller = new ItemsController(mock.Object);
             Item testItem = new Item();
-            testItem.Description = "test item";
+            testItem.Description = "Wash the Dog";
+            testItem.ItemId = 1;
 
             // Act
-            controller.Create(testItem);
-            ViewResult indexView = new ItemsController().Index() as ViewResult;
+            ViewResult indexView = controller.Index() as ViewResult;
             var collection = indexView.ViewData.Model as IEnumerable<Item>;
 
             // Assert

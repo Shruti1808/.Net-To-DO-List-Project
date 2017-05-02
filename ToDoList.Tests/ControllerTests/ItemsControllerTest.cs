@@ -88,5 +88,6 @@ namespace ToDoList.Tests
             // Assert
             Assert.Contains<Item>(testItem, collection);
         }
+
     }
 }

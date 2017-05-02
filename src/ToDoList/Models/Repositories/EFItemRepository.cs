@@ -45,6 +45,7 @@ namespace ToDoList.Models
             db.Items.Remove(item);
             db.SaveChanges();
         }
+
     }
 
 

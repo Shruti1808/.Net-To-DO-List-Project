@@ -9,7 +9,19 @@ namespace ToDoList.Models
     public class EFItemRepository : IItemRepository
     {
             ToDoListContext db = new ToDoListContext();
-       
+
+        public EFItemRepository(ToDoListContext connection = null)
+        {
+            if (connection == null)
+            {
+                this.db = new ToDoListContext();
+            }
+            else
+            {
+                this.db = connection;
+            }
+        }
+
         //Methods
         public IQueryable<Item> Items
         { get { return db.Items; } }
